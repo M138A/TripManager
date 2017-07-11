@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.mghartgring.tripmanager.TripOverviewActivity"
+    tools:showIn="@layout/trip_overview">
+
+    <EditText
+        android:id="@+id/tripName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Trip name"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_above="@+id/startButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="StartButtonClicked"
+        android:text="Start trip"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="101dp"
+        android:layout_above="@+id/positions"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp" />
+
+    <ListView
+        android:id="@+id/positions"
+        android:layout_width="369dp"
+        android:layout_height="339dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="164dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/positions"
+        android:layout_below="@+id/tripName"
+        android:text="Travelled distance:" />
+
+    <TextView
+        android:id="@+id/distanceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_toStartOf="@+id/tripName"
+        android:text="placeholder" />
+
+</RelativeLayout>
