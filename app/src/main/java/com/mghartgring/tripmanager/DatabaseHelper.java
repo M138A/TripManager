@@ -30,6 +30,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         getWritableDatabase().execSQL("INSERT INTO trips VALUES ('" + currentDate + "','" + TripName + "', " + String.valueOf(distance) + ")");
     }
 
+    public void RemoveAll()
+    {
+        getWritableDatabase().execSQL("DELETE FROM trips");
+    }
+
+
     public ArrayList<Trip> GetData()
     {
         SQLiteDatabase db = getReadableDatabase();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
@@ -24,12 +25,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 import static java.lang.System.in;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private DatabaseHelper dbh;
+    private double pricekm;
     private ArrayList<Trip> arrayOfTrips = new ArrayList<Trip>();
     private MainTripListAdapter adapter;
     @Override
@@ -67,6 +70,11 @@ public class MainActivity extends AppCompatActivity
             TotalDrivenKilometers += current.Distance;
         }
         ((TextView) findViewById(R.id.travelledDistanceText)).setText(String.valueOf(TotalDrivenKilometers) + " meters");
+        double fuelPrice = (Double.valueOf(PreferenceManager.getDefaultSharedPreferences(this).getAll().get("fuel_price").toString()));
+        ((TextView) findViewById(R.id.fuelPriceText)).setText("€ " + fuelPrice);
+        pricekm = fuelPrice;
+        double amountToPay = fuelPrice * (TotalDrivenKilometers / 1000);
+        ((TextView) findViewById(R.id.outstandingText)).setText("€ " + Math.round(amountToPay * 100.0) / 100.0);
     }
 
     private void InitDataList()
@@ -104,6 +112,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            final MainActivity t = this;
+            startActivity(new Intent(t, Settings.class));
             return true;
         }
         else if(id == R.id.action_refresh){
@@ -131,7 +141,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.trip_overview) {
 
         } else if (id == R.id.settings) {
-
+            final MainActivity t = this;
+            startActivity(new Intent(t, Settings.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

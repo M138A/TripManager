@@ -36,4 +36,42 @@
         android:text="0km"
         android:textAlignment="textEnd" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/travelledDistanceText"
+        android:layout_below="@+id/travelledDistanceText"
+        android:layout_marginTop="27dp"
+        android:text="Price per kilometer" />
+
+    <TextView
+        android:id="@+id/fuelPriceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="Not configured"
+        android:layout_below="@+id/textView6"
+        android:layout_alignEnd="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/TripList"
+        android:layout_below="@+id/textView5"
+        android:layout_marginStart="18dp"
+        android:text="Outstanding:"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/outstandingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="35dp"
+        android:text="0.0" />
+
 </RelativeLayout>
