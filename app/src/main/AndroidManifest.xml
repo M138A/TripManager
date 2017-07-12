@@ -26,7 +26,8 @@
         <activity
             android:name=".TripOverviewActivity"
             android:label="@string/title_activity_trip_overview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

@@ -29,8 +29,12 @@ import java.util.TimerTask;
 public class TripOverviewActivity extends AppCompatActivity {
 
     private boolean running = false;
+    private LocationManager locationManager;
+    private TripLocator triplocator;
     public double distance = 0.0;
     public ArrayList<Location> locationList = new ArrayList<Location>();
+    private DatabaseHelper database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,7 @@ public class TripOverviewActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("New trip");
+        database = new DatabaseHelper(getApplicationContext());
     }
 
     public void StartButtonClicked(View view) {
@@ -50,6 +55,8 @@ public class TripOverviewActivity extends AppCompatActivity {
         ((Button) view).setText("Stop trip");
 
         if(running) {
+            EndTrip(distance, tripName);
+            locationManager.removeUpdates(triplocator);
             ((Button) view).setText("Start trip");
             ((EditText) findViewById(R.id.tripName)).setText("");
             running = !running;
@@ -57,10 +64,17 @@ public class TripOverviewActivity extends AppCompatActivity {
             return;
         }
 
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         running = !running;
 
     }
+
+    private void EndTrip(double dist, String tripName)
+    {
+        database.InsertItem(tripName, dist);
+        finish();
+    }
+
     public void AddPositionToList(Location loc)
     {
         final Location location = loc;
@@ -104,11 +118,11 @@ public class TripOverviewActivity extends AppCompatActivity {
     }
 
     private void StartTracking() {
-        TripLocator tl = new TripLocator(this);
-        LocationManager locationManager = (LocationManager)
+        triplocator = new TripLocator(this);
+        locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
         //noinspection MissingPermission
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, tl);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, triplocator);
     }
 
 }

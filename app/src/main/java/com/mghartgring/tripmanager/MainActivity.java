@@ -1,6 +1,8 @@
 package com.mghartgring.tripmanager;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,10 +16,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import static java.lang.System.in;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private DatabaseHelper dbh;
+    private ArrayList<Trip> arrayOfTrips = new ArrayList<Trip>();
+    private MainTripListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +56,26 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        InitDataList();
+        InitUI();
+    }
+    private void InitUI()
+    {
+        double TotalDrivenKilometers = 0.0;
+        for(int i = 0; i < adapter.getCount(); i++){
+            Trip current = adapter.getItem(i);
+            TotalDrivenKilometers += current.Distance;
+        }
+        ((TextView) findViewById(R.id.travelledDistanceText)).setText(String.valueOf(TotalDrivenKilometers) + " meters");
+    }
+
+    private void InitDataList()
+    {
+        ListView lv = (ListView) findViewById(R.id.TripList);
+        dbh = new DatabaseHelper(getApplicationContext());
+        adapter = new MainTripListAdapter(this, arrayOfTrips);
+        lv.setAdapter(adapter);
+        adapter.addAll(dbh.GetData());
     }
 
     @Override
@@ -72,8 +106,20 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.action_refresh){
+            refreshTable();
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshTable(){
+        ArrayList<Trip> x = dbh.GetData();
+        adapter.clear();
+        adapter.addAll(x);
+        InitUI();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -92,4 +138,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

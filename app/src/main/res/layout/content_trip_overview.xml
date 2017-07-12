@@ -17,9 +17,9 @@
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="16dp"
-        android:layout_above="@+id/startButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp" />
+        android:layout_marginTop="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/startButton"
@@ -29,33 +29,34 @@
         android:text="Start trip"
         tools:layout_editor_absoluteX="141dp"
         tools:layout_editor_absoluteY="101dp"
-        android:layout_above="@+id/positions"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="38dp" />
-
-    <ListView
-        android:id="@+id/positions"
-        android:layout_width="369dp"
-        android:layout_height="339dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="164dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/positions"
         android:layout_below="@+id/tripName"
-        android:text="Travelled distance:" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
 
-    <TextView
-        android:id="@+id/distanceText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/startButton"
+        android:layout_marginTop="90dp"
         android:layout_toStartOf="@+id/tripName"
-        android:text="placeholder" />
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Travelled distance:"
+            android:layout_alignBottom="@+id/distanceText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="21dp" />
+
+        <TextView
+            android:id="@+id/distanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="88dp" />
+    </RelativeLayout>
 
 </RelativeLayout>
