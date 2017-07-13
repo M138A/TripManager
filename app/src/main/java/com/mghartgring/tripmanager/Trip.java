@@ -1,10 +1,12 @@
 package com.mghartgring.tripmanager;
 
+import java.io.Serializable;
+
 /**
  * Created by MarkPC on 12-7-2017.
  */
 
-public class Trip {
+public class Trip implements Serializable {
     public String Date;
     public String TripName;
     public double Distance;

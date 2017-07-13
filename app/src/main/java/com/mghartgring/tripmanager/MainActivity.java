@@ -32,7 +32,6 @@ import static java.lang.System.in;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private DatabaseHelper dbh;
-    private double pricekm;
     private ArrayList<Trip> arrayOfTrips = new ArrayList<Trip>();
     private MainTripListAdapter adapter;
     @Override
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity
         ((TextView) findViewById(R.id.travelledDistanceText)).setText(String.valueOf(TotalDrivenKilometers) + " meters");
         double fuelPrice = (Double.valueOf(PreferenceManager.getDefaultSharedPreferences(this).getAll().get("fuel_price").toString()));
         ((TextView) findViewById(R.id.fuelPriceText)).setText("€ " + fuelPrice);
-        pricekm = fuelPrice;
         double amountToPay = fuelPrice * (TotalDrivenKilometers / 1000);
         ((TextView) findViewById(R.id.outstandingText)).setText("€ " + Math.round(amountToPay * 100.0) / 100.0);
     }
@@ -120,15 +118,13 @@ public class MainActivity extends AppCompatActivity
             refreshTable();
             return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
     private void refreshTable(){
-        ArrayList<Trip> x = dbh.GetData();
+        ArrayList<Trip> trips = dbh.GetData();
         adapter.clear();
-        adapter.addAll(x);
+        adapter.addAll(trips);
         InitUI();
     }
 
@@ -139,10 +135,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.trip_overview) {
-
+            refreshTable();
         } else if (id == R.id.settings) {
             final MainActivity t = this;
             startActivity(new Intent(t, Settings.class));
+        } else if (id == R.id.export) {
+            final MainActivity t = this;
+            Intent intent = new Intent(t, ExportActivity.class);
+            intent.putExtra("trips", arrayOfTrips);
+            startActivity(intent);
+            
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -12,13 +12,10 @@
         android:title="@string/pref_title_fuel_price" />
 
     <com.mghartgring.tripmanager.RemoveConfirmationDialog
-
         android:key="RemoveTrips"
         android:title="Remove all trips"
         android:dialogTitle="Confirmation"
         android:dialogMessage="Are you sure?"
         android:positiveButtonText="Yes"
         android:negativeButtonText="No"/>
-
-
 </PreferenceScreen>

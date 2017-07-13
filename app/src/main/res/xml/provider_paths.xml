@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <root-path path="/data/data/com.mghartgring.tripmanager/files/" name="ExportedTrips"/>
+</paths>

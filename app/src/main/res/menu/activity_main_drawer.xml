@@ -7,6 +7,9 @@
             android:id="@+id/trip_overview"
             android:title="Trip overview" />
         <item
+            android:id="@+id/export"
+            android:title="Export" />
+        <item
             android:id="@+id/settings"
             android:title="Settings" />
     </group>
