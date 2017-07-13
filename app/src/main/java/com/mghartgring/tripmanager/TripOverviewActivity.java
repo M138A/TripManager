@@ -45,6 +45,10 @@ public class TripOverviewActivity extends AppCompatActivity {
         database = new DatabaseHelper(getApplicationContext());
     }
 
+    /**
+     * Triggered when the 'Start trip' button is tapped
+     * @param view The button
+     */
     public void StartButtonClicked(View view) {
 
         String tripName = ((EditText) findViewById(R.id.tripName)).getText().toString();
@@ -63,18 +67,27 @@ public class TripOverviewActivity extends AppCompatActivity {
             locationList.clear();
             return;
         }
-
+        //Ask for all the permissions needed
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         running = !running;
 
     }
 
+    /**
+     * Adds the item to the database and ends the activity
+     * @param dist Distance of the trip
+     * @param tripName Name of the trip
+     */
     private void EndTrip(double dist, String tripName)
     {
         database.InsertItem(tripName, dist);
         finish();
     }
 
+    /**
+     * Adds location to the list of locations
+     * @param loc
+     */
     public void AddPositionToList(Location loc)
     {
         final Location location = loc;
@@ -88,6 +101,9 @@ public class TripOverviewActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.distanceText)).setText(String.valueOf(distance));
     }
 
+    /**
+     * Calculates the distance
+     */
     private void UpdateDistance()
     {
         if(locationList.size() != 2) return;
@@ -98,6 +114,8 @@ public class TripOverviewActivity extends AppCompatActivity {
         locationList.clear();
         locationList.add(l2);
     }
+
+
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
@@ -106,17 +124,23 @@ public class TripOverviewActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     StartTracking();
                 } else {
-                    Snackbar.make(this.getCurrentFocus(), "App needs permissions to use GPS", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(this.getCurrentFocus(), "App needs permissions to use GPS and storage", Snackbar.LENGTH_LONG).show();
                 }
                 return;
             }
         }
     }
 
+    /**
+     * Shows message that a name should be inserted
+     */
     private void NoTripName() {
         Snackbar.make(this.getCurrentFocus(), "Please insert a name for the trip", Snackbar.LENGTH_LONG).show();
     }
 
+    /**
+     * Initializes the LocationListener
+     */
     private void StartTracking() {
         triplocator = new TripLocator(this);
         locationManager = (LocationManager)

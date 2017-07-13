@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -38,12 +37,22 @@ public class ExportActivity extends AppCompatActivity {
         database = new DatabaseHelper(getBaseContext());
     }
 
+    /**
+     * Creates a PdfPCell
+     * @param value The value of the cell
+     * @param f The front for the cell
+     * @return
+     */
     private PdfPCell AddCell(String value, Font f)
     {
         PdfPCell cell = new PdfPCell(new Phrase(value, f));
         return cell;
     }
 
+    /**
+     * Triggered when the button is clicked
+     * @param view The button
+     */
     public void BeginExport(View view)
     {
         RemoveOldFile("export.pdf");
@@ -53,16 +62,29 @@ public class ExportActivity extends AppCompatActivity {
         database.RemoveAll();
     }
 
+    /**
+     * Get state of checkbox
+     * @return true when checked
+     */
     private Boolean RemoveTripsAfterExport(){
-        if(((CheckBox)findViewById(R.id.deleteCheckBox)).isChecked()) return true;
-        return false;
+        return ((CheckBox) findViewById(R.id.deleteCheckBox)).isChecked();
     }
 
+    /**
+     * Rounds to two decimal places
+     * @param value
+     * @return
+     */
     private double ToCurrency(double value)
     {
         return Math.round(value * 100.0) / 100.0;
     }
 
+    /**
+     * Creates the PDF document
+     * @param fileName The name of the file
+     * @return The created file
+     */
     private File createPDF(String fileName)
     {
         Document doc = new Document();
@@ -128,11 +150,19 @@ public class ExportActivity extends AppCompatActivity {
         return getFileStreamPath(fileName);
     }
 
+    /**
+     * Removes old files if they exist
+     * @param name
+     */
     private void RemoveOldFile(String name)
     {
         if(getFileStreamPath(name).exists()) getFileStreamPath(name).delete();
     }
 
+    /**
+     * Opens the PDF file
+     * @param p Path to the PDF file
+     */
     private void DisplayPDF(String p)
     {
         File file = new File(p);

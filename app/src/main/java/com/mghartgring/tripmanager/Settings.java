@@ -46,14 +46,6 @@ public class Settings extends AppCompatActivity {
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 fragment).commit();
-
-
-    }
-
-    public String getFuelPrice()
-    {
-        Preference x = fragment.getPreferenceManager().findPreference("fuel_price");
-        return ((EditTextPreference)x).getText();
     }
 
     public static class PrefsFragment extends PreferenceFragment {
@@ -64,8 +56,6 @@ public class Settings extends AppCompatActivity {
 
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.pref_general);
-            Preference x = getPreferenceManager().findPreference("fuel_price");
-            String value = ((EditTextPreference)x).getText();
         }
     }
 

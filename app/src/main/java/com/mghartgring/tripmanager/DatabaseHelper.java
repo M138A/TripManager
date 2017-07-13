@@ -24,18 +24,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, "TripDatabase", null, 2);
 
     }
+
+    /**
+     * Inserts trip into database
+     * @param TripName Name of the trip
+     * @param distance Travelled distance during the trip
+     */
     public void InsertItem(String TripName, double distance)
     {
         String currentDate = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
         getWritableDatabase().execSQL("INSERT INTO trips VALUES ('" + currentDate + "','" + TripName + "', " + String.valueOf(distance) + ")");
     }
 
+    /**
+     * Removes all trips from the database
+     */
     public void RemoveAll()
     {
         getWritableDatabase().execSQL("DELETE FROM trips");
     }
 
-
+    /**
+     * Gets all the trips from the database
+     * @return An ArrayList containing all the trips
+     */
     public ArrayList<Trip> GetData()
     {
         SQLiteDatabase db = getReadableDatabase();
@@ -43,8 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Trip> data = new ArrayList<Trip>();
         if (cursor.moveToFirst()) {
             do {
-                // get  the  data into array,or class variable
-                //data.add(cursor.getString(cursor.getColumnIndex("tripname")));
                 Trip current = new Trip(getValue(cursor, "tripdate"),getValue(cursor, "tripname"),Double.valueOf(getValue(cursor, "length")));
                 data.add(current);
             } while (cursor.moveToNext());
@@ -52,12 +62,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public void EmptyTable()
-    {
-        getWritableDatabase().execSQL("DELETE FROM trips");
-    }
-
-
+    /**
+     * Gets the value from a Cursor
+     * @param c The cursor
+     * @param cName The name of the value
+     * @return
+     */
     private String getValue(Cursor c, String cName){
         return c.getString(c.getColumnIndex(cName));
     }

@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity
         InitDataList();
         InitUI();
     }
+
+    /**
+     * Sets all the labels in the UI
+     */
     private void InitUI()
     {
         double TotalDrivenKilometers = 0.0;
@@ -75,6 +79,9 @@ public class MainActivity extends AppCompatActivity
         ((TextView) findViewById(R.id.outstandingText)).setText("€ " + Math.round(amountToPay * 100.0) / 100.0);
     }
 
+    /**
+     * Populates the ListView containing all the trips
+     */
     private void InitDataList()
     {
         ListView lv = (ListView) findViewById(R.id.TripList);
@@ -121,6 +128,9 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Reloads the ListView
+     */
     private void refreshTable(){
         ArrayList<Trip> trips = dbh.GetData();
         adapter.clear();
